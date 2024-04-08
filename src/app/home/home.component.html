@@ -1,0 +1,34 @@
+<mat-card class="example-card" *ngIf="auth_service.auth_loading">
+  <mat-list>
+    <mat-list-item>
+      <mat-icon mat-list-icon>login</mat-icon> <div mat-line>Authenticating ...</div>
+    </mat-list-item>
+  </mat-list>
+</mat-card>
+
+<mat-card class="example-card" *ngIf="!auth_service.auth_loading">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Bem vindo ao FRST-SSO</mat-card-title>
+      <mat-card-subtitle>{{auth_service.user.name}}</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+
+        <mat-list>
+          <mat-divider></mat-divider>
+          <div mat-subheader>FRST APPS</div>
+          <mat-list-item *ngFor="let app of auth_service.user.apps_menu">
+            <mat-icon mat-list-icon>widgets</mat-icon>
+            <div mat-line><button mat-stroked-button class="app-item" (click)="auth_service.redirectToApp(app.url_auth)">{{app.name}}</button></div>
+          </mat-list-item>
+
+          <mat-list-item *ngIf="!auth_service.user.apps_menu.length">Sua lista de apps esta vazia. =[</mat-list-item>          
+        </mat-list>
+    </mat-card-content>
+        
+    <mat-card-actions>
+      <button mat-raised-button color="success" (click)="auth_service.logout()">Logout</button>
+    </mat-card-actions>
+
+  </mat-card>
